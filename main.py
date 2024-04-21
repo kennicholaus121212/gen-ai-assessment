@@ -91,6 +91,56 @@ aiplatform.init(project=PROJECT_ID, location=LOCATION)
 # print(BUCKET_URI)
 
 
+# create vector search index
+
+# create index
+#  my_index = aiplatform.MatchingEngineIndex.create_tree_ah_index(
+#     display_name = "gen-ai-index",
+#     contents_delta_uri = BUCKET_URI,
+#     dimensions = 768,
+#     approximate_neighbors_count = 5,
+#  )
+
+#  # create index endpoint
+
+# my_index_endpoint = aiplatform.MatchingEngineIndexEndpoint.create(
+#     display_name = f"gen-ai-index-endpoint"
+#     public_endpoint_enabled = True
+# )
+
+# # deploy the index
+# my_index_endpoint.deploy_index(
+#     index = my_index, deployed_index_id = "gen-ai-index-deployed"
+# )
+
+
+#query the vector database
+#question =
+#QUESTION=
+
+# question_with_task_type = TextEmbeddingInput(
+#     text=QUESTION,
+#     task_type='RETRIVAL_QUERY'
+# )
+
+# from vertexai.language_models import  TextEmbeddingInput
+
+# my_index_endpoint = aiplatform.MatchingEngineIndexEndpoint(
+#     index_endpoint_name ="project/..."
+# )
+
+# QUESION_EMBEDDING = textembedding(question_with_task_type)
+
+# respone = my_index_endpoint.find_neighbors(
+#     deployed_index_id ="gen-ai-index-endpoint"
+#     queries =[QUESION_EMBEDDING],
+#     num_neighbors = 5
+# )
+
+
+
+
+
 # The Home page route
 @app.route("/", methods=['POST', 'GET'])
 def main():
