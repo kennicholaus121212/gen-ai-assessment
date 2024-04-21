@@ -2,6 +2,6 @@ Flask
 Jinja2
 pytest
 pyyaml
-google-cloud-aiplatform>=1.29.0
+google-cloud-aiplatform
 google-cloud-storage
-langchain chromadb
+langchain
