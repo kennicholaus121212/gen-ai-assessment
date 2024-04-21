@@ -36,8 +36,8 @@ API_KEY = get_config_value(config, 'palm', 'API_KEY', 'AIzaSyAyVy43qaTt6ICVRJYdl
 LOCATION = get_config_value(config, 'palm', 'LOCATION', 'us-central1')
 
 
-from google.cloud import aiplatform
-aiplatform.init(project=PROJECT_ID, location=LOCATION)
+# from google.cloud import aiplatform
+# aiplatform.init(project=PROJECT_ID, location=LOCATION)
 
 
 # The Home page route
@@ -71,14 +71,14 @@ def main():
 
 def search_vector_database(question):
 
-    def text_embedding(text_to_embed) -> list:
-    """Text embedding with a Large Language Model."""
-    model = TextEmbeddingModel.from_pretrained("textembedding-gecko@002")
-    embeddings = model.get_embeddings([text_to_embed])
-    for embedding in embeddings:
-        vector = embedding.values
-        print(f"Length of Embedding Vector: {len(vector)}")
-    return vector
+    # def text_embedding(text_to_embed) -> list:
+    # """Text embedding with a Large Language Model."""
+    # model = TextEmbeddingModel.from_pretrained("textembedding-gecko@002")
+    # embeddings = model.get_embeddings([text_to_embed])
+    # for embedding in embeddings:
+    #     vector = embedding.values
+    #     print(f"Length of Embedding Vector: {len(vector)}")
+    # return vector
 
     # emb1 = text_embedding(question)
 
