@@ -31,9 +31,9 @@ TEMPERATURE = get_config_value(config, 'palm', 'temperature', 0.8)
 MAX_OUTPUT_TOKENS = get_config_value(config, 'palm', 'max_output_tokens', 256)
 TOP_P = get_config_value(config, 'palm', 'top_p', 0.8)
 TOP_K = get_config_value(config, 'palm', 'top_k', 40)
-PROJECT_ID = get_config_value(config, 'palm', 'PROJECT_ID', 'qwiklabs-gcp-03-987c5e88d2d4')
-API_KEY = get_config_value(config, 'palm', 'API_KEY', 'AIzaSyAyVy43qaTt6ICVRJYdlWEQ0qz7Oltjhnk')
-LOCATION = get_config_value(config, 'palm', 'LOCATION', 'us-central1')
+# PROJECT_ID = get_config_value(config, 'palm', 'PROJECT_ID', 'qwiklabs-gcp-03-987c5e88d2d4')
+# API_KEY = get_config_value(config, 'palm', 'API_KEY', 'AIzaSyAyVy43qaTt6ICVRJYdlWEQ0qz7Oltjhnk')
+# LOCATION = get_config_value(config, 'palm', 'LOCATION', 'us-central1')
 
 
 # from google.cloud import aiplatform
