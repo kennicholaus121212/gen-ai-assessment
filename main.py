@@ -41,11 +41,55 @@ from google.cloud import aiplatform
 aiplatform.init(project=PROJECT_ID, location=LOCATION)
 
 
-from langchain_community.document_loaders import PyPDFLoader
+# from langchain_community.document_loaders import PyPDFLoader
 
-loader = PyPDFLoader("fpc-manual.pdf")
-pages = loader.load_and_split()
-pages[0]
+# loader = PyPDFLoader("fpc-manual.pdf")
+# pages = loader.load_and_split()
+# print(pages[0])
+
+# import json
+# FILE_NAME = "embeddings.jsonl"
+# # create a jsonl file 
+# with open(FILE_NAME, 'w') as f:
+#     for id, embedding in zip(ids, embeddings_array):
+#         f.writer(json.dumps({"id":str(id), "embedding": embedding.tolist()}) + )
+
+
+# #create a firestore database for pages
+# from google.cloud import firestore
+
+# db = firestore.Client()
+
+# #create a collection for search
+# collection_name = 'pdf_pages'
+# if collection_name not in collections():
+#     db.collection(collection_name)
+
+# #add documents in the collection
+# for id, page in zip(ids, pages):
+#     db.collection(collection_name).document(str(id)).set(("page":page))
+
+# #query the firestore databaase based on document id 10
+# document = db.collection(collection_name).document(str(10)).get()
+# print(document.to_dict()["page"][:200])
+
+
+# #create a cloud storage bucket if it doesnt exist
+# from google.cloud import storage
+# BUCKET = 'gen_ai_app_ken'
+# BUCKET_URI = "gs://{}".format(BUCKET_NAME)
+
+# storage_client = storage.Client()
+# bucket = storage_client.bucket(BUCKET_NAME)
+# if not bucket.exists():
+#     bucket.create(location='us-central1')
+
+# #upload the JSON L file to the bucket
+# blob = bucket.blob(FILE_NAME)
+# blob.upload_from_filename(FILE_NAME)
+
+# print(BUCKET_URI)
+
 
 # The Home page route
 @app.route("/", methods=['POST', 'GET'])
