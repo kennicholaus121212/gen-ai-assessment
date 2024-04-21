@@ -138,6 +138,25 @@ aiplatform.init(project=PROJECT_ID, location=LOCATION)
 # )
 
 
+# #show the search results
+
+# for idex, neighbor in enumerate(response(0)):
+#     print(f"{neighbor.distance:.2f} {neighbor.id}")
+
+
+# # get the pages from firestore
+
+# documents = {}
+# for idex, neighbor in enumerate(respone(0)):
+#     id = str(neighbor.id)
+#     document = db.collection(collection_name).document(id).get()
+#     documents.append(document.to_dict["page"])
+
+# pages = "\n\n".join(documents)
+# print(len(pages))
+
+
+
 
 
 
