@@ -259,7 +259,7 @@ def ask_gemini(question, data):
     # answer the user's question based on the data retrieved
     # from their search
     #response = "Not implemented!"
-    return response
+    return response.text
 
 
 if __name__ == '__main__':
