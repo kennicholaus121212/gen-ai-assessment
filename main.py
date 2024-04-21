@@ -43,9 +43,9 @@ aiplatform.init(project=PROJECT_ID, location=LOCATION)
 
 from langchain_community.document_loaders import PyPDFLoader
 
-loader = PyPDFLoader("example_data/layout-parser-paper.pdf")
+loader = PyPDFLoader("fpc-manual.pdf")
 pages = loader.load_and_split()
-
+pages[0]
 
 # The Home page route
 @app.route("/", methods=['POST', 'GET'])
