@@ -40,7 +40,7 @@ def main():
     # They haven't yet submitted the form
     if request.method == 'GET':
         question = ""
-        answer = "Hi, Gen AI, How Can I Help You?"
+        answer = "Hi, How Can I Help You to clarify questions on restaurant safety?"
 
     # The user asked a question and submitted the form
     # The request.method would equal 'POST'
