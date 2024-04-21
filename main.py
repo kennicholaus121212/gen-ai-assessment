@@ -41,6 +41,12 @@ from google.cloud import aiplatform
 aiplatform.init(project=PROJECT_ID, location=LOCATION)
 
 
+from langchain_community.document_loaders import PyPDFLoader
+
+loader = PyPDFLoader("example_data/layout-parser-paper.pdf")
+pages = loader.load_and_split()
+
+
 # The Home page route
 @app.route("/", methods=['POST', 'GET'])
 def main():
@@ -89,7 +95,7 @@ def search_vector_database(question):
     # 4. Get the five documents from Firestore that match the IDs
     # 5. Concatenate the documents into a single string and return it
 
-    data = ""
+    data = emb1
     return data
 
 
