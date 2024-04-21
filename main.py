@@ -28,7 +28,7 @@ SUBTITLE = get_config_value(config, 'app', 'subtitle', 'Your friendly Bot')
 CONTEXT = get_config_value(config, 'palm', 'context',
                            'You are a bot who can answer all sorts of questions')
 BOTNAME = get_config_value(config, 'palm', 'botname', 'Google')
-TEMPERATURE = get_config_value(config, 'palm', 'temperature', 0.8)
+TEMPERATURE = get_config_value(config, 'palm', 'temperature', 0.2)
 MAX_OUTPUT_TOKENS = get_config_value(config, 'palm', 'max_output_tokens', 256)
 TOP_P = get_config_value(config, 'palm', 'top_p', 0.8)
 TOP_K = get_config_value(config, 'palm', 'top_k', 40)
