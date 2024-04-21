@@ -31,6 +31,13 @@ TEMPERATURE = get_config_value(config, 'palm', 'temperature', 0.8)
 MAX_OUTPUT_TOKENS = get_config_value(config, 'palm', 'max_output_tokens', 256)
 TOP_P = get_config_value(config, 'palm', 'top_p', 0.8)
 TOP_K = get_config_value(config, 'palm', 'top_k', 40)
+PROJECT_ID = get_config_value(config, 'palm', 'PROJECT_ID', 'qwiklabs-gcp-03-987c5e88d2d4')
+API_KEY = get_config_value(config, 'palm', 'API_KEY', 'AIzaSyAyVy43qaTt6ICVRJYdlWEQ0qz7Oltjhnk')
+
+
+
+from google.cloud import aiplatform
+aiplatform.init(project=PROJECT_ID, location=LOCATION)
 
 
 # The Home page route
@@ -64,14 +71,14 @@ def main():
 
 def search_vector_database(question):
 
-    # def text_embedding(text_to_embed) -> list:
-    # """Text embedding with a Large Language Model."""
-    # model = TextEmbeddingModel.from_pretrained("textembedding-gecko@002")
-    # embeddings = model.get_embeddings([text_to_embed])
-    # for embedding in embeddings:
-    #     vector = embedding.values
-    #     print(f"Length of Embedding Vector: {len(vector)}")
-    # return vector
+    def text_embedding(text_to_embed) -> list:
+    """Text embedding with a Large Language Model."""
+    model = TextEmbeddingModel.from_pretrained("textembedding-gecko@002")
+    embeddings = model.get_embeddings([text_to_embed])
+    for embedding in embeddings:
+        vector = embedding.values
+        print(f"Length of Embedding Vector: {len(vector)}")
+    return vector
 
     # emb1 = text_embedding(question)
 
