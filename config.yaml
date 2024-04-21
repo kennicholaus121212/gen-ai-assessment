@@ -1,10 +1,10 @@
 app:
- title: "FreshBot"
+ title: "Generative AI BOT"
  subtitle: "Your Friendly Restaurant Safety Expert"
 
 palm:
-  botname: "FreshBot"
-  context: "Your name is FreshBot. You answer Questions related to restaurant cleanliness and food handling safety."
+  botname: "Generative AI created at starbucks"
+  context: "Your name is Gen AI BOT. You answer Questions related to restaurant cleanliness and food handling safety."
   temperature: 0.2
   max_output_tokens: 1024
   top_p: 0.8
