@@ -64,16 +64,16 @@ def main():
 
 def search_vector_database(question):
 
-    def text_embedding(text_to_embed) -> list:
-    """Text embedding with a Large Language Model."""
-    model = TextEmbeddingModel.from_pretrained("textembedding-gecko@002")
-    embeddings = model.get_embeddings([text_to_embed])
-    for embedding in embeddings:
-        vector = embedding.values
-        print(f"Length of Embedding Vector: {len(vector)}")
-    return vector
+    # def text_embedding(text_to_embed) -> list:
+    # """Text embedding with a Large Language Model."""
+    # model = TextEmbeddingModel.from_pretrained("textembedding-gecko@002")
+    # embeddings = model.get_embeddings([text_to_embed])
+    # for embedding in embeddings:
+    #     vector = embedding.values
+    #     print(f"Length of Embedding Vector: {len(vector)}")
+    # return vector
 
-    emb1 = text_embedding(question)
+    # emb1 = text_embedding(question)
 
     # 1. Convert the question into an embedding
     # 2. Search the Vector database for the 5 closest embeddings to the user's question
