@@ -4,6 +4,7 @@ import yaml
 import vertexai
 from vertexai.language_models import TextGenerationModel
 from vertexai.language_models import TextEmbeddingModel
+from vertexai.generative_models import Content, GenerativeModel, Part
 
 app = Flask(__name__)
 
@@ -93,10 +94,14 @@ def search_vector_database(question):
 
 
 def ask_gemini(question, data):
+    model = GenerativeModel("gemini-1.0-pro")
+    chat = model.start_chat()
+
+    response = chat.send_message(question)
     # You will need to change the code below to ask Gemni to
     # answer the user's question based on the data retrieved
     # from their search
-    response = "Not implemented!"
+    #response = "Not implemented!"
     return response
 
 
