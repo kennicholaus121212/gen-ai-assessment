@@ -156,6 +156,44 @@ aiplatform.init(project=PROJECT_ID, location=LOCATION)
 # print(len(pages))
 
 
+# import vertexai
+# from vertexai.preview.generative.models import GenerativeModel, Part
+
+# def generate(prompt):
+#     model = GenerativeModel("gemini pro")
+#     response = model.generate_content(
+#         prompt,
+#         generation_config=(
+#             "max_output_tokens":8192,
+#             "temperature":0.5,
+#             "top_p":0.5,
+#             "top_k":10,
+#         ),
+#     stream=False,
+#     )
+#     return response.text
+
+# prompt = '''
+# context: edit the following data surrounded by triple back ticks.
+# 1. Correct spelling and grammer mistakes.
+# 2. Remove data not related to restaurant and food safety
+# 3. return the edited data.
+# Data: {0}
+# cleaned data:
+# '''.formate(pages)
+# cleaned_data = generate(prompt)
+
+
+# prompt = '''
+# context: Answer the question using the following data surrounded by triple back ticks.
+# data: {0}
+# question: {1}
+# answer:
+# '''.format(cleaned_data, QUESTION)
+
+
+
+
 
 
 
