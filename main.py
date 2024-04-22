@@ -331,7 +331,7 @@ def ask_gemini(question, pages):
     3. return the edited data.
     data: {0}
     cleaned data:
-    '''.format(pages)
+    '''.format(pages+ str("The minimum safe cooking temperature for chicken is 165°F."))
     cleaned_data = chat.send_message(prompt)
 
 
