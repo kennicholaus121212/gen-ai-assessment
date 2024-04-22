@@ -2,9 +2,11 @@ from flask import Flask, render_template, request
 import os
 import yaml
 import vertexai
+import pandas
 from vertexai.language_models import TextGenerationModel
 from vertexai.language_models import TextEmbeddingModel
 from vertexai.generative_models import Content, GenerativeModel, Part
+from vertexai.language_models import  TextEmbeddingInput
 
 app = Flask(__name__)
 
@@ -32,13 +34,28 @@ TEMPERATURE = get_config_value(config, 'palm', 'temperature', 0.2)
 MAX_OUTPUT_TOKENS = get_config_value(config, 'palm', 'max_output_tokens', 256)
 TOP_P = get_config_value(config, 'palm', 'top_p', 0.8)
 TOP_K = get_config_value(config, 'palm', 'top_k', 40)
-PROJECT_ID = 'qwiklabs-gcp-03-987c5e88d2d4'
-API_KEY = 'AIzaSyAyVy43qaTt6ICVRJYdlWEQ0qz7Oltjhnk'
+PROJECT_ID = 'qwiklabs-gcp-02-4b2f76b52489'
+API_KEY = 'AIzaSyDkOkRQmnVfaz7Xiejm5RTrMo6gl0Simqo'
 LOCATION = 'us-central1'
 
 
 from google.cloud import aiplatform
 aiplatform.init(project=PROJECT_ID, location=LOCATION)
+
+
+# Load the text embeddings model
+from vertexai.preview.language_models import TextEmbeddingModel
+
+model = TextEmbeddingModel.from_pretrained("textembedding-gecko@002")
+
+
+import pandas as pd
+import firebase_admin
+from firebase_admin import firestore
+
+# Initialize the Firestore client
+firebase_admin.initialize_app()
+db = firestore.client()
 
 
 # from langchain_community.document_loaders import PyPDFLoader
@@ -112,6 +129,9 @@ aiplatform.init(project=PROJECT_ID, location=LOCATION)
 # my_index_endpoint.deploy_index(
 #     index = my_index, deployed_index_id = "gen-ai-index-deployed"
 # )
+
+
+
 
 
 #query the vector database
@@ -198,6 +218,133 @@ aiplatform.init(project=PROJECT_ID, location=LOCATION)
 
 
 
+# # The Home page route
+# @app.route("/", methods=['POST', 'GET'])
+# def main():
+
+#     # The user clicked on a link to the Home page
+#     # They haven't yet submitted the form
+#     if request.method == 'GET':
+#         question = ""
+#         answer = "Hi, I'm FreshBot, what can I do for you?"
+
+#     # The user asked a question and submitted the form
+#     # The request.method would equal 'POST'
+#     else: 
+#         question = request.form['input']
+
+#         # Get the data to answer the question that 
+#         # most likely matches the question based on the embeddings
+#         data = search_vector_database(question)
+
+#         # Ask Gemini to answer the question using the data 
+#         # from the database
+#         answer = ask_gemini(question, data)
+        
+#     # Display the home page with the required variables set
+#     model = {"title": TITLE, "subtitle": SUBTITLE,
+#              "botname": BOTNAME, "message": answer, "input": question}
+#     return render_template('index.html', model=model)
+
+
+
+
+
+def search_vector_database(question):
+    # question_with_task_type = TextEmbeddingInput(
+    #             text=question, task_type='RETRIEVAL_QUERY')
+
+    def text_embedding(text_to_embed) -> list:
+        """Text embedding with a Large Language Model."""
+        model = TextEmbeddingModel.from_pretrained("textembedding-gecko@002")
+        embeddings = model.get_embeddings(text_to_embed)
+        for embedding in embeddings:
+            vector = embedding.values
+            #print(f"Length of Embedding Vector: {len(vector)}")
+        return vector
+
+    from vertexai.language_models import  TextEmbeddingInput
+    
+
+  
+
+    #QUESTION="What is the minimum safe cooking temperature for chicken?"
+
+    question_with_task_type = TextEmbeddingInput(
+        text=question,
+        task_type='RETRIEVAL_QUERY'
+    )
+
+    question_embeddings = text_embedding([question_with_task_type])
+
+    my_index_endpoint = aiplatform.MatchingEngineIndexEndpoint(
+    index_endpoint_name ="projects/898581334588/locations/us-central1/indexEndpoints/5381612438707765248")
+    DEPLOYED_INDEX_ID =  f"assessment_deployed1"
+
+
+    # run query
+    response = my_index_endpoint.find_neighbors(
+        deployed_index_id = DEPLOYED_INDEX_ID,
+        queries = [question_embeddings],
+        num_neighbors = 5
+)
+
+       
+
+ 
+
+    documents = {}
+    for index, neighbor in enumerate(response[0]):
+        id = str(neighbor.id)
+        document = db.collection(collection_name).document(id).get()
+        documents.append(document.to_dict["page"])
+        
+
+    pages = "\n\n".join(documents)
+
+    #pages.append('\nThe minimum safe cooking temperature for chicken is 165°F./n')
+
+    # 1. Convert the question into an embedding
+    # 2. Search the Vector database for the 5 closest embeddings to the user's question
+    # 3. Get the IDs for the five embeddings that are returned
+    # 4. Get the five documents from Firestore that match the IDs
+    # 5. Concatenate the documents into a single string and return it
+
+    return pages
+
+
+def ask_gemini(question, pages):
+    model = GenerativeModel("gemini-1.0-pro")
+    chat = model.start_chat()
+
+    response = chat.send_message(question)
+    # You will need to change the code below to ask Gemni to
+    # answer the user's question based on the data retrieved
+    # from their search
+    #response = "Not implemented!"
+
+
+    prompt = '''
+    context: edit the following data surrounded by triple back ticks.
+    1. Correct spelling and grammer mistakes.
+    2. Remove data not related to restaurant and food safety
+    3. return the edited data.
+    data: {0}
+    cleaned data:
+    '''.format(pages)
+    cleaned_data = chat.send_message(prompt)
+
+
+    prompt1 = '''
+    context: Answer the question using the following data surrounded by triple back ticks.
+    data: {0}
+    question: {1}
+    answer:
+    '''.format(cleaned_data, question)
+    response = chat.send_message(prompt1)
+    return response.text
+
+
 # The Home page route
 @app.route("/", methods=['POST', 'GET'])
 def main():
@@ -225,41 +372,6 @@ def main():
     model = {"title": TITLE, "subtitle": SUBTITLE,
              "botname": BOTNAME, "message": answer, "input": question}
     return render_template('index.html', model=model)
-
-
-def search_vector_database(question):
-
-    def text_embedding(text_to_embed) -> list:
-        """Text embedding with a Large Language Model."""
-        model = TextEmbeddingModel.from_pretrained("textembedding-gecko@002")
-        embeddings = model.get_embeddings([text_to_embed])
-        for embedding in embeddings:
-            vector = embedding.values
-            print(f"Length of Embedding Vector: {len(vector)}")
-        return vector
-
-    emb1 = text_embedding(question)
-
-    # 1. Convert the question into an embedding
-    # 2. Search the Vector database for the 5 closest embeddings to the user's question
-    # 3. Get the IDs for the five embeddings that are returned
-    # 4. Get the five documents from Firestore that match the IDs
-    # 5. Concatenate the documents into a single string and return it
-
-    data = emb1
-    return data
-
-
-def ask_gemini(question, data):
-    model = GenerativeModel("gemini-1.0-pro")
-    chat = model.start_chat()
-
-    response = chat.send_message(question)
-    # You will need to change the code below to ask Gemni to
-    # answer the user's question based on the data retrieved
-    # from their search
-    #response = "Not implemented!"
-    return response.text
 
 
 if __name__ == '__main__':

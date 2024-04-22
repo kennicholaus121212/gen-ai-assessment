@@ -7,3 +7,9 @@ google-cloud-storage
 langchain
 langchain-google-vertexai
 pypdf
+firebase_admin
+pandas
+langchain_community
+google-cloud-firestore
+textract
+PyPDF2
