@@ -34,7 +34,7 @@ TEMPERATURE = get_config_value(config, 'palm', 'temperature', 0.2)
 MAX_OUTPUT_TOKENS = get_config_value(config, 'palm', 'max_output_tokens', 256)
 TOP_P = get_config_value(config, 'palm', 'top_p', 0.8)
 TOP_K = get_config_value(config, 'palm', 'top_k', 40)
-PROJECT_ID = 'qwiklabs-gcp-02-4b2f76b52489'
+PROJECT_ID = 'qwiklabs-gcp-02-0c71a0fc92ea'
 API_KEY = 'AIzaSyDkOkRQmnVfaz7Xiejm5RTrMo6gl0Simqo'
 LOCATION = 'us-central1'
 
@@ -278,7 +278,7 @@ def search_vector_database(question):
     question_embeddings = text_embedding([question_with_task_type])
 
     my_index_endpoint = aiplatform.MatchingEngineIndexEndpoint(
-    index_endpoint_name ="projects/898581334588/locations/us-central1/indexEndpoints/5381612438707765248")
+    index_endpoint_name ="projects/304935860940/locations/us-central1/indexEndpoints/4121589705462513664")
     DEPLOYED_INDEX_ID =  f"assessment_deployed1"
 
 
