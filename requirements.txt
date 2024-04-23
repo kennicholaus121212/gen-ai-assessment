@@ -13,3 +13,4 @@ langchain_community
 google-cloud-firestore
 textract
 PyPDF2
+markdown>=3.5.1
