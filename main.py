@@ -3,7 +3,7 @@ import os
 import yaml
 import vertexai
 import pandas
-import markdown  # to format LLM output for web display
+#import markdown  # to format LLM output for web display
 from vertexai.language_models import TextGenerationModel
 from vertexai.language_models import TextEmbeddingModel
 from vertexai.generative_models import Content, GenerativeModel, Part
@@ -343,8 +343,8 @@ def ask_gemini(question, pages):
     answer:
     '''.format(cleaned_data, question)
     response = chat.send_message(prompt1)
-    markdown_response = markdown.markdown(response.text)
-    return markdown_response
+    #markdown_response = markdown.markdown(response.text)
+    return response.text
 
 
 # The Home page route
