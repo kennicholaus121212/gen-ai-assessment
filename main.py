@@ -36,7 +36,6 @@ MAX_OUTPUT_TOKENS = get_config_value(config, 'palm', 'max_output_tokens', 256)
 TOP_P = get_config_value(config, 'palm', 'top_p', 0.8)
 TOP_K = get_config_value(config, 'palm', 'top_k', 40)
 PROJECT_ID = 'qwiklabs-gcp-02-0c71a0fc92ea'
-API_KEY = 'AIzaSyDkOkRQmnVfaz7Xiejm5RTrMo6gl0Simqo'
 LOCATION = 'us-central1'
 
 
