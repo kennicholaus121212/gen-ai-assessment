@@ -278,7 +278,7 @@ def search_vector_database(question):
     question_embeddings = text_embedding([question_with_task_type])
 
     my_index_endpoint = aiplatform.MatchingEngineIndexEndpoint(
-    index_endpoint_name ="projects/304935860940/locations/us-central1/indexEndpoints/4121589705462513664")
+    index_endpoint_name ="projects/68941022856/locations/us-central1/indexEndpoints/3870408473120342016")
     DEPLOYED_INDEX_ID =  f"assessment_deployed1"
 
 
